@@ -1,32 +1,20 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 3000;
 
+// Підключення CORS
 app.use(cors());
-app.use(bodyParser.json());
 
-let reviews = []; // Зберігання відгуків у пам'яті
+// Інші налаштування сервера
+app.use(express.json());
 
-// Отримання всіх відгуків
-app.get('/reviews', (req, res) => {
-    res.json(reviews);
-});
-
-// Додавання нового відгуку
-app.post('/reviews', (req, res) => {
-    const { name, text } = req.body;
-    if (name && text) {
-        reviews.push({ name, text });
-        res.status(201).json({ message: 'Review added successfully' });
-    } else {
-        res.status(400).json({ message: 'Name and text are required' });
-    }
+app.get('/', (req, res) => {
+  res.send('CORS працює!');
 });
 
 // Запуск сервера
+const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
